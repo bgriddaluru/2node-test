@@ -73,3 +73,24 @@ spec:
         requests:
           storage: 5Gi
 ---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-5
+  namespace: test-ns
+spec:
+  replicas: 10
+  selector:
+    matchLabels:
+      app: my-app-5
+  template:
+    metadata:
+      labels:
+        app: my-app-5
+    spec:
+      containers:
+      - name: my-container
+        image: nginx:stable-alpine
+        ports:
+        - containerPort: 80
+---
