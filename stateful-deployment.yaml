@@ -141,7 +141,7 @@ metadata:
   name: deployment-1
   namespace: test-ns
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: my-app-1
@@ -169,7 +169,7 @@ metadata:
   name: deployment-2
   namespace: test-ns
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: my-app-2
@@ -197,7 +197,7 @@ metadata:
   name: deployment-3
   namespace: test-ns
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: my-app-3
@@ -225,7 +225,7 @@ metadata:
   name: deployment-4
   namespace: test-ns
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: my-app-4
@@ -254,7 +254,7 @@ metadata:
   name: deployment-5
   namespace: test-ns
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: my-app-5
@@ -282,7 +282,7 @@ metadata:
   name: deployment-6
   namespace: test-ns
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: my-app-6
@@ -310,7 +310,7 @@ metadata:
   name: deployment-7
   namespace: test-ns
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: my-app-7
@@ -338,7 +338,7 @@ metadata:
   name: deployment-8
   namespace: test-ns
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: my-app-8
@@ -366,7 +366,7 @@ metadata:
   name: deployment-9
   namespace: test-ns
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: my-app-9
@@ -394,7 +394,7 @@ metadata:
   name: deployment-10
   namespace: test-ns
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: my-app-10
