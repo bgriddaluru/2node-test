@@ -25,12 +25,8 @@ spec:
         ports:
         - containerPort: 80
         volumeMounts:
-        - name: my-pvc-mount
+        - name: pvc-1
           mountPath: /data
-      volumes:
-      - name: my-pvc-mount
-        persistentVolumeClaim:
-          claimName: pvc-1
   volumeClaimTemplates:
   - metadata:
       name: pvc-1
@@ -64,12 +60,8 @@ spec:
         ports:
         - containerPort: 80
         volumeMounts:
-        - name: my-pvc-mount
+        - name: pvc-2
           mountPath: /data
-      volumes:
-      - name: my-pvc-mount
-        persistentVolumeClaim:
-          claimName: pvc-2
   volumeClaimTemplates:
   - metadata:
       name: pvc-2
