@@ -1,154 +1,23 @@
-
-
 apiVersion: v1
 kind: Namespace
 metadata:
   name: test-ns
 ---
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: test-pvc-1
-  namespace: test-ns
-spec:
-  accessModes:
-    - ReadWriteOnce
-  storageClassName: managed-premium
-  resources:
-    requests:
-      storage: 5Gi
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: test-pvc-2
-  namespace: test-ns
-spec:
-  accessModes:
-    - ReadWriteOnce
-  storageClassName: managed-premium
-  resources:
-    requests:
-      storage: 5Gi
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: test-pvc-3
-  namespace: test-ns
-spec:
-  accessModes:
-    - ReadWriteOnce
-  storageClassName: managed-premium
-  resources:
-    requests:
-      storage: 5Gi
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: test-pvc-4
-  namespace: test-ns
-spec:
-  accessModes:
-    - ReadWriteOnce
-  storageClassName: managed-premium
-  resources:
-    requests:
-      storage: 5Gi
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: test-pvc-5
-  namespace: test-ns
-spec:
-  accessModes:
-    - ReadWriteOnce
-  storageClassName: managed-premium
-  resources:
-    requests:
-      storage: 5Gi
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: test-pvc-6
-  namespace: test-ns
-spec:
-  accessModes:
-    - ReadWriteOnce
-  storageClassName: managed-premium
-  resources:
-    requests:
-      storage: 5Gi
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: test-pvc-7
-  namespace: test-ns
-spec:
-  accessModes:
-    - ReadWriteOnce
-  storageClassName: managed-premium
-  resources:
-    requests:
-      storage: 5Gi
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: test-pvc-8
-  namespace: test-ns
-spec:
-  accessModes:
-    - ReadWriteOnce
-  storageClassName: managed-premium
-  resources:
-    requests:
-      storage: 5Gi
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: test-pvc-9
-  namespace: test-ns
-spec:
-  accessModes:
-    - ReadWriteOnce
-  storageClassName: managed-premium
-  resources:
-    requests:
-      storage: 5Gi
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: test-pvc-10
-  namespace: test-ns
-spec:
-  accessModes:
-    - ReadWriteOnce
-  storageClassName: managed-premium
-  resources:
-    requests:
-      storage: 5Gi
----
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
-  name: deployment-1
+  name: statefulset-1
   namespace: test-ns
 spec:
-  replicas: 1
+  serviceName: test-svc-1
+  replicas: 10
   selector:
     matchLabels:
-      app: my-app-1
+      app: app-1
   template:
     metadata:
       labels:
-        app: my-app-1
+        app: app-1
     spec:
       containers:
       - name: my-container
@@ -161,22 +30,33 @@ spec:
       volumes:
       - name: my-pvc-mount
         persistentVolumeClaim:
-          claimName: test-pvc-1
+          claimName: pvc-1-${HOSTNAME}
+  volumeClaimTemplates:
+  - metadata:
+      name: pvc-1-${HOSTNAME}
+    spec:
+      accessModes:
+        - ReadWriteOnce
+      storageClassName: managed-premium
+      resources:
+        requests:
+          storage: 5Gi
 ---
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
-  name: deployment-2
+  name: statefulset-2
   namespace: test-ns
 spec:
-  replicas: 1
+  serviceName: test-svc-2
+  replicas: 10
   selector:
     matchLabels:
-      app: my-app-2
+      app: app-2
   template:
     metadata:
       labels:
-        app: my-app-2
+        app: app-2
     spec:
       containers:
       - name: my-container
@@ -189,230 +69,15 @@ spec:
       volumes:
       - name: my-pvc-mount
         persistentVolumeClaim:
-          claimName: test-pvc-2
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: deployment-3
-  namespace: test-ns
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: my-app-3
-  template:
-    metadata:
-      labels:
-        app: my-app-3
+          claimName: pvc-2-${HOSTNAME}
+  volumeClaimTemplates:
+  - metadata:
+      name: pvc-2-${HOSTNAME}
     spec:
-      containers:
-      - name: my-container
-        image: nginx:stable-alpine
-        ports:
-        - containerPort: 80
-        volumeMounts:
-        - name: my-pvc-mount
-          mountPath: /data
-      volumes:
-      - name: my-pvc-mount
-        persistentVolumeClaim:
-          claimName: test-pvc-3
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: deployment-4
-  namespace: test-ns
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: my-app-4
-  template:
-    metadata:
-      labels:
-        app: my-app-4
-    spec:
-      containers:
-      - name: my-container
-        image: nginx:stable-alpine
-        ports:
-        - containerPort: 80
-        volumeMounts:
-        - name: my-pvc-mount
-          mountPath: /data
-      volumes:
-      - name: my-pvc-mount
-        persistentVolumeClaim:
-          claimName: test-pvc-4
----
-
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: deployment-5
-  namespace: test-ns
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: my-app-5
-  template:
-    metadata:
-      labels:
-        app: my-app-5
-    spec:
-      containers:
-      - name: my-container
-        image: nginx:stable-alpine
-        ports:
-        - containerPort: 80
-        volumeMounts:
-        - name: my-pvc-mount
-          mountPath: /data
-      volumes:
-      - name: my-pvc-mount
-        persistentVolumeClaim:
-          claimName: test-pvc-5
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: deployment-6
-  namespace: test-ns
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: my-app-6
-  template:
-    metadata:
-      labels:
-        app: my-app-6
-    spec:
-      containers:
-      - name: my-container
-        image: nginx:stable-alpine
-        ports:
-        - containerPort: 80
-        volumeMounts:
-        - name: my-pvc-mount
-          mountPath: /data
-      volumes:
-      - name: my-pvc-mount
-        persistentVolumeClaim:
-          claimName: test-pvc-6
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: deployment-7
-  namespace: test-ns
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: my-app-7
-  template:
-    metadata:
-      labels:
-        app: my-app-7
-    spec:
-      containers:
-      - name: my-container
-        image: nginx:stable-alpine
-        ports:
-        - containerPort: 80
-        volumeMounts:
-        - name: my-pvc-mount
-          mountPath: /data
-      volumes:
-      - name: my-pvc-mount
-        persistentVolumeClaim:
-          claimName: test-pvc-7
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: deployment-8
-  namespace: test-ns
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: my-app-8
-  template:
-    metadata:
-      labels:
-        app: my-app-8
-    spec:
-      containers:
-      - name: my-container
-        image: nginx:stable-alpine
-        ports:
-        - containerPort: 80
-        volumeMounts:
-        - name: my-pvc-mount
-          mountPath: /data
-      volumes:
-      - name: my-pvc-mount
-        persistentVolumeClaim:
-          claimName: test-pvc-8
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: deployment-9
-  namespace: test-ns
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: my-app-9
-  template:
-    metadata:
-      labels:
-        app: my-app-9
-    spec:
-      containers:
-      - name: my-container
-        image: nginx:stable-alpine
-        ports:
-        - containerPort: 80
-        volumeMounts:
-        - name: my-pvc-mount
-          mountPath: /data
-      volumes:
-      - name: my-pvc-mount
-        persistentVolumeClaim:
-          claimName: test-pvc-9
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: deployment-10
-  namespace: test-ns
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: my-app-10
-  template:
-    metadata:
-      labels:
-        app: my-app-10
-    spec:
-      containers:
-      - name: my-container
-        image: nginx:stable-alpine
-        ports:
-        - containerPort: 80
-        volumeMounts:
-        - name: my-pvc-mount
-          mountPath: /data
-      volumes:
-      - name: my-pvc-mount
-        persistentVolumeClaim:
-          claimName: test-pvc-10
+      accessModes:
+        - ReadWriteOnce
+      storageClassName: managed-premium
+      resources:
+        requests:
+          storage: 5Gi
 ---
