@@ -3,3 +3,14 @@ kind: Namespace
 metadata:
   name: test-ns
 ---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: test-pvc-1
+  namespace: test-ns
+spec:
+  storageClassName: managed-premium
+  resources:
+    requests:
+      storage: 5Gi
+---
