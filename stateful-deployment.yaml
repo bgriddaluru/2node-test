@@ -10,7 +10,7 @@ metadata:
   namespace: test-ns
 spec:
   serviceName: test-svc-1
-  replicas: 10
+  replicas: 2
   selector:
     matchLabels:
       app: app-1
@@ -30,41 +30,6 @@ spec:
   volumeClaimTemplates:
   - metadata:
       name: pvc-1
-    spec:
-      accessModes:
-        - ReadWriteOnce
-      storageClassName: managed-premium
-      resources:
-        requests:
-          storage: 5Gi
----
-apiVersion: apps/v1
-kind: StatefulSet
-metadata:
-  name: statefulset-2
-  namespace: test-ns
-spec:
-  serviceName: test-svc-2
-  replicas: 10
-  selector:
-    matchLabels:
-      app: app-2
-  template:
-    metadata:
-      labels:
-        app: app-2
-    spec:
-      containers:
-      - name: my-container
-        image: nginx:stable-alpine
-        ports:
-        - containerPort: 80
-        volumeMounts:
-        - name: pvc-2
-          mountPath: /data
-  volumeClaimTemplates:
-  - metadata:
-      name: pvc-2
     spec:
       accessModes:
         - ReadWriteOnce
