@@ -1,0 +1,61 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: test-ns
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: statefulset-1
+  namespace: test-ns
+spec:
+  serviceName: test-svc-1
+  replicas: 2
+  selector:
+    matchLabels:
+      app: app-1
+  template:
+    metadata:
+      labels:
+        app: app-1
+    spec:
+      containers:
+      - name: my-container
+        image: nginx:stable-alpine
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: pvc-1
+          mountPath: /data
+  volumeClaimTemplates:
+  - metadata:
+      name: pvc-1
+    spec:
+      accessModes:
+        - ReadWriteOnce
+      storageClassName: managed-premium
+      resources:
+        requests:
+          storage: 5Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-5
+  namespace: test-ns
+spec:
+  replicas: 10
+  selector:
+    matchLabels:
+      app: my-app-5
+  template:
+    metadata:
+      labels:
+        app: my-app-5
+    spec:
+      containers:
+      - name: my-container
+        image: nginx:stable-alpine
+        ports:
+        - containerPort: 80
+---
